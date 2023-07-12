@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'theme.dart';
 import 'package:intl/intl.dart';
 import 'data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddJournal extends StatefulWidget {
   const AddJournal({super.key});
@@ -14,8 +13,8 @@ class AddJournal extends StatefulWidget {
 }
 
 class _AddJournalState extends State<AddJournal> {
-  TextEditingController _title = TextEditingController();
-  TextEditingController _content = TextEditingController();
+  final TextEditingController _title = TextEditingController();
+  final TextEditingController _content = TextEditingController();
   void completed() {
     if (_title.text.isNotEmpty || _content.text.isNotEmpty) {
       setState(() {
@@ -25,10 +24,11 @@ class _AddJournalState extends State<AddJournal> {
         String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
         String formatForDate = DateFormat('yyyy-MM-dd').format(now);
         String dateTime = formattedDate;
+        String favorite='0';
         if (title.isEmpty) {
           title = formatForDate;
         }
-        mjournal.add([title, content, dateTime]);
+        mjournal.add([title, content, dateTime,favorite]);
       });
     }
     Navigator.pop(context);
@@ -41,7 +41,7 @@ class _AddJournalState extends State<AddJournal> {
 
     // Set system overlay style based on the selected theme
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         // statusBarBrightness:
         //     themeProvider.isDarkMode ? Brightness.light : Brightness.dark,
@@ -51,8 +51,8 @@ class _AddJournalState extends State<AddJournal> {
       child: Scaffold(
         backgroundColor: // themeProvider.isDarkMode ? Colors.black : Colors.white,
             themeProvider.isDarkMode
-                ? Color.fromRGBO(42, 42, 46, 1)
-                : Color.fromRGBO(255, 255, 255, 1),
+                ? const Color.fromRGBO(42, 42, 46, 1)
+                : const Color.fromRGBO(255, 255, 255, 1),
         body: Column(
           children: [
             //appBar
@@ -65,8 +65,8 @@ class _AddJournalState extends State<AddJournal> {
                       completed();
                     },
                     child: Container(
-                      margin: EdgeInsets.all(4),
-                      child: Icon(
+                      margin: const EdgeInsets.all(4),
+                      child: const Icon(
                         Icons.arrow_back,
                         size: 30,
                         color: Colors.blue,
@@ -78,8 +78,8 @@ class _AddJournalState extends State<AddJournal> {
                       completed();
                     },
                     child: Container(
-                      margin: EdgeInsets.all(4),
-                      child: Text(
+                      margin: const EdgeInsets.all(4),
+                      child: const Text(
                         'Done',
                         style: TextStyle(
                           color: Colors.blue,
@@ -93,7 +93,7 @@ class _AddJournalState extends State<AddJournal> {
             ),
             //titile
             Container(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: TextField(
                 controller: _title,
                 style: TextStyle(
@@ -111,7 +111,7 @@ class _AddJournalState extends State<AddJournal> {
             ),
             //line
             Container(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Divider(
                 color: themeProvider.isDarkMode ? Colors.white : Colors.black,
                 thickness: 1,
@@ -120,7 +120,7 @@ class _AddJournalState extends State<AddJournal> {
             //write
             Expanded(
               child: Container(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                 child: TextField(
                   controller: _content,
                   style: TextStyle(

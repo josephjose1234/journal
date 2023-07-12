@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
 import 'theme.dart';
 import 'homePage.dart';
 
@@ -9,7 +8,7 @@ void main() {
   runApp( 
     ChangeNotifierProvider<ThemeProvider>(
       create: (_) => ThemeProvider(),
-      builder: (context, _) => MyApp(),
+      builder: (context, _) => const MyApp(),
     ),
   );
 }
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home:HomePage()
     );

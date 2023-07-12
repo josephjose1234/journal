@@ -29,6 +29,13 @@ class _HomePageState extends State<HomePage> {
     await prefs.setStringList('journalData', flattenedData);
   }
 
+  void deleteJournal(int index) {
+    setState(() {
+      mjournal.removeAt(index);
+      saveData();
+    });
+  }
+
   Future<void> loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? flattenedData = prefs.getStringList('journalData');
@@ -45,10 +52,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void navFunction() async {
+    //nav to addjournal page;;
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (Context) => AddJournal(),
+        builder: (Context) => const AddJournal(),
       ),
     );
     setState(() {
@@ -57,6 +65,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void navToView(int index) async {
+    // for viewing Data=>ViewJournal page
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (Context) => ViewJournal(Ind: index)),
@@ -66,15 +75,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Color lovee = Colors.blue;
-  void changeColor() {
-    if (lovee == Colors.blue) {
+   //color of Favorite Icon
+  void addToFavorites(int index) {//function for AddToFavorites;;
+    if (mjournal[index][3]=='0') {
       setState(() {
-        lovee = Colors.red;
+        mjournal[index][3]='1';
+        saveData();
+        
       });
     } else {
       setState(() {
-        lovee = Colors.blue;
+        mjournal[index][3]='0';
+        saveData();
       });
     }
   }
@@ -86,7 +98,7 @@ class _HomePageState extends State<HomePage> {
 
     // Set system overlay style based on the selected theme
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         // statusBarBrightness:
         //     themeProvider.isDarkMode ? Brightness.light : Brightness.dark,
@@ -96,17 +108,17 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: themeProvider.isDarkMode
             ? Colors.black
-            : Color.fromRGBO(242, 242, 246, 1),
+            : const Color.fromRGBO(242, 242, 246, 1),
         body: Stack(
           children: [
             Column(
               //crossAxisAlignment: CrossAxisAlignment.start,
               //mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                //Edit
+                //Edit Text on Top;;
                 Container(
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: const Text(
                     'Edit',
                     style: TextStyle(
@@ -117,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 //Heading Journal
                 Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: Text(
                     'Journal',
                     style: TextStyle(
@@ -131,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 // SEARCH
                 Search(themeProvider: themeProvider),
-                //TimeLine.Head
+                //TimeLine.Heading
                 Container(
                   margin: const EdgeInsets.all(20),
                   alignment: Alignment.centerLeft,
@@ -146,8 +158,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                //Entries
-
+                //Entries of journals
+                //ListBuilder
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.all(4),
@@ -167,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  navToView(index);
+                                  navToView(index); //for ViewJournalNavigation
                                 },
                                 child: Container(
                                   child: Column(
@@ -176,9 +188,10 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       Container(
                                         alignment: Alignment.topLeft,
-                                        padding: const EdgeInsets.only(bottom: 10),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10),
                                         child: Text(
-                                          mjournal[index][0],
+                                          mjournal[index][0], //title
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -191,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                                       Container(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          mjournal[index][1],
+                                          mjournal[index][1], //content
                                           style: TextStyle(
                                             fontSize: 10,
                                             fontWeight: FontWeight.normal,
@@ -206,6 +219,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Container(
+                                //for Date and Icons
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Row(
                                   mainAxisAlignment:
@@ -213,10 +227,10 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        navToView(index);
+                                        navToView(index); //
                                       },
                                       child: Text(
-                                        mjournal[index][2],
+                                        mjournal[index][2], //Date
                                         style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w300,
@@ -228,13 +242,22 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        changeColor();
+                                        addToFavorites(index); //changing Color of FavoriteIcon
                                       },
-                                      child: Icon(Icons.favorite_border,
-                                          color: lovee),
+                                      child: Icon(
+                                        mjournal[index][3]=='0'?
+                                        Icons.favorite_border:Icons.favorite,
+                                          color: Colors.blue),
                                     ),
-                                    const Icon(Icons.delete_outline,
-                                        color: Colors.blue)
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          deleteJournal(index);
+                                        });
+                                      },
+                                      child: const Icon(Icons.delete_outline,
+                                          color: Colors.blue),
+                                    )
                                   ],
                                 ),
                               )
@@ -266,6 +289,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+///SearchContaier,no functions;;
 class Search extends StatefulWidget {
   const Search({
     super.key,
@@ -282,22 +306,36 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    //themeProvider
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    // Set system overlay style based on the selected theme
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        // statusBarBrightness:
+        //     themeProvider.isDarkMode ? Brightness.light : Brightness.dark,
+      ),
+    );
     return Column(children: [
       GestureDetector(
         onTap: () {},
         child: Container(
-            decoration: BoxDecoration(
-                color: widget.themeProvider.isDarkMode
-                    ? Colors.black
-                    : const Color.fromRGBO(79, 60, 60, 1),
-                borderRadius: BorderRadius.circular(20)),
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.fromLTRB(10, 1, 10, 1),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                  hintText: 'Search..', border: InputBorder.none),
-            )),
+          decoration: BoxDecoration(
+              color: themeProvider.isDarkMode
+                  ? const Color.fromRGBO(42, 42, 46, 1)
+                  : const Color.fromRGBO(255, 255, 255, 1),
+              borderRadius: BorderRadius.circular(20)),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.fromLTRB(10, 1, 10, 1),
+          child: TextField(
+            controller: _searchController,
+            style: TextStyle(color: themeProvider.isDarkMode?Colors.white:Colors.black),
+            decoration:  InputDecoration(
+              hintStyle: TextStyle(color: themeProvider.isDarkMode?Colors.white:Colors.black),
+                hintText: 'Search..', border: InputBorder.none),
+          ),
+        ),
       ),
     ]);
   }

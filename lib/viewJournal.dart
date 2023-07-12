@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'theme.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'addJournal.dart';
+
 
 class ViewJournal extends StatefulWidget {
   final int Ind;
-  ViewJournal({required this.Ind});
+  const ViewJournal({super.key, required this.Ind});
 
   @override
   State<ViewJournal> createState() => _ViewJournalState();
@@ -53,7 +52,7 @@ class _ViewJournalState extends State<ViewJournal> {
 
     // Set system overlay style based on the selected theme
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         // statusBarBrightness:
         //     themeProvider.isDarkMode ? Brightness.light : Brightness.dark,
@@ -63,8 +62,8 @@ class _ViewJournalState extends State<ViewJournal> {
       child: Scaffold(
         backgroundColor: // themeProvider.isDarkMode ? Colors.black : Colors.white,
             themeProvider.isDarkMode
-                ? Color.fromRGBO(42, 42, 46, 1)
-                : Color.fromRGBO(255, 255, 255, 1),
+                ? const Color.fromRGBO(42, 42, 46, 1)
+                : const Color.fromRGBO(255, 255, 255, 1),
         body: Column(
           children: [
             Container(
@@ -76,9 +75,9 @@ class _ViewJournalState extends State<ViewJournal> {
                       edited();
                     },
                     child: Container(
-                      margin: EdgeInsets.all(4),
+                      margin: const EdgeInsets.all(4),
                       child:
-                          Icon(Icons.arrow_back, size: 30, color: Colors.blue),
+                          const Icon(Icons.arrow_back, size: 30, color: Colors.blue),
                     ),
                   ),
                   GestureDetector(
@@ -86,8 +85,8 @@ class _ViewJournalState extends State<ViewJournal> {
                       edited();
                     },
                     child: Container(
-                      margin: EdgeInsets.all(4),
-                      child: Text(
+                      margin: const EdgeInsets.all(4),
+                      child: const Text(
                         'Done',
                         style: TextStyle(
                           color: Colors.blue,
@@ -100,19 +99,19 @@ class _ViewJournalState extends State<ViewJournal> {
               ),
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: TextField(
                 controller: _title,
                 style: TextStyle(
                   color: themeProvider.isDarkMode ? Colors.white : Colors.black,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Divider(
                 color: themeProvider.isDarkMode ? Colors.white : Colors.black,
                 thickness: 1,
@@ -121,7 +120,7 @@ class _ViewJournalState extends State<ViewJournal> {
             //write
             Expanded(
               child: Container(
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                 child: TextField(
                   controller: _content,
                   maxLines: null,
@@ -129,7 +128,7 @@ class _ViewJournalState extends State<ViewJournal> {
                     color:
                         themeProvider.isDarkMode ? Colors.white : Colors.black,
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                   ),
                 ),
