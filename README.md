@@ -1,16 +1,17 @@
 # journal
 
-A new Flutter project.
+The Flutter Journal Project is a versatile and user-friendly mobile application designed to help users capture their thoughts, memories, and experiences on the go. With its intuitive interface and rich feature set, the app enables users to maintain a digital journal effortlessly, fostering reflection, creativity, and personal growth.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+DarkMode<br>
+Data Presistance Using Shared Preferences Package.<br>
 
-A few resources to get you started if this is your first Flutter project:
+## Archetecture
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Main-Entry Point
+HomePage-As name suggests<br>
+Theme- DarkMode<br>
+AddJournal-Screen for Adding new Journal to the List <br>
+ViewJournal - Screen for Displaying the Specified Journal<br> 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
